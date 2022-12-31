@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import UniqueConstraint
  
- 
+
 Base = declarative_base()
  
 class Currency(Base):
