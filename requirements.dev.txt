@@ -13,3 +13,6 @@ numpy
 yfinance
 ipykernel
 bs4
+mplfinance
+plotly
+nbformat

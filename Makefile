@@ -35,7 +35,7 @@ CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda act
 condavenv:
 	@rm -Rf condavenv
 	@conda create -p ./condavenv python=3.9 conda --file requirements.dev.txt -y
-	@$(CONDA_ACTIVATE) ./condavenv && pip install -e .
+	@$(CONDA_ACTIVATE) ./condavenv && pip install -e . && conda update --all -y
 	@echo "Enter virtual environment using:\n\n\t$ conda activate  ./condavenv\n"
 
 # help: clean                          - clean all files using .gitignore rules
