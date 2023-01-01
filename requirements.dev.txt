@@ -11,3 +11,5 @@ pandas
 matplotlib
 numpy
 yfinance
+ipykernel
+bs4

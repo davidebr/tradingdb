@@ -10,6 +10,11 @@ MAKEFLAGS += --no-print-directory
 # help: TradingDB Makefile help
 # help:
 
+# this to use the same shell
+.ONESHELL:
+
+
+
 # help: help                           - display this makefile's help information
 .PHONY: help
 help:
@@ -23,6 +28,15 @@ venv:
 	@/bin/bash -c "source venv/bin/activate && pip install pip --upgrade && pip install -r requirements.dev.txt && pip install -e ."
 	@echo "Enter virtual environment using:\n\n\t$ source venv/bin/activate\n"
 
+CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
+
+# help: condavenv                      - create a conda virtual environment for development
+.PHONY: condavenv
+condavenv:
+	@rm -Rf condavenv
+	@conda create -p ./condavenv python=3.9 conda --file requirements.dev.txt -y
+	@$(CONDA_ACTIVATE) ./condavenv && pip install -e .
+	@echo "Enter virtual environment using:\n\n\t$ conda activate  ./condavenv\n"
 
 # help: clean                          - clean all files using .gitignore rules
 .PHONY: clean
