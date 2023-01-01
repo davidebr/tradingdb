@@ -67,11 +67,8 @@ def add_currencies(session):
 
 def add_exchanges(session):
     with session.begin() as mysession:
-        for k,v in EXCHANGES.items():
-            name=k
-            cur=v['cur']
-            cid=mysession.query(stock.Currency.id).filter(stock.Currency.name==cur).one()[0]
-            newexchange=stock.Exchange(name=name,currency_id=cid)
+        for name,v in EXCHANGES.items():
+            newexchange=stock.Exchange(name=name)
             mysession.add(newexchange)
 
 
@@ -85,3 +82,40 @@ def add_intervals(session):
                    mysession.add(p)
               #mysession.commit()
         #logger.debug("Intervals addition done")
+
+
+def add_df_to_yfsymbol(session,symbol,df,interval,commit=False):
+    """add a dataframe to the database using yfsymbol as key
+
+    Args:
+        session (session): the sqlalchemy session
+        symbol (str): string for yf_symbol in orm
+        df (pandas.DataFrame): pandas daraframe
+        interval (str): the interval of the data, e.g. 1d, 1h, 1m
+
+    """
+
+    # get stock id
+    with session.begin() as mysession:
+            for index, row in df.iterrows():
+                # convert name into time
+                sid=mysession.query(stock.Stock.id).filter(stock.Stock.yf_symbol==symbol).one()[0]
+                pid=mysession.query(stock.Period.id).filter(stock.Period.name==interval).one()[0]
+                #print(index)
+                q=mysession.query(stock.Price)
+                q=q.filter(stock.Price.stock_id==sid)
+                q=q.filter(stock.Price.period_id==pid)
+                r=q.filter(stock.Price.date==index.to_pydatetime()).one_or_none()
+                if r is None:
+                    p=stock.Price(
+                                stock_id=sid,
+                                period_id=pid,
+                                date=index.to_pydatetime(),  
+                                open=row['Open'],
+                                low=row['Low'],
+                                high=row['High'],
+                                close=row['Close'],
+                                adjusted_close=row['Adj Close'],
+                                volume=row['Volume'])
+                    mysession.add(p)
+            if commit is False: session.rollback()
