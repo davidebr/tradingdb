@@ -7,6 +7,15 @@ EXCHANGES={
     'FTSE-AIM':{'cur':'GBP'}
 }
 
+INDEXES={
+    'FTSE100':              { 'yf':'^FTSE','url':'%5EFTSE'},
+    'FTSEAIM_all_share':    {'yf': '^FTAI', 'url':'%5EFTAI'},
+    'NASDAQ':               {'yf':'^IXIC','url':'%5EIXIC'},
+    'DowJones':             {'yf':'^GSPC','url':'%5EGSPC'},
+    'S&P500':               {'yf':'^DJI','url':'%5EDJI'},
+}
+
+
 VALID_INTERVALS={   '1m':60,
                         '2m':2*60,
                         '5m':5*60,
