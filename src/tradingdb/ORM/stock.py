@@ -24,6 +24,8 @@ class Stock(Base):
     company = Column('company',String,nullable=False)
     exchange_id = Column('exchange_id',Integer,ForeignKey("exchange.id"),nullable=False) 
     currency_id = Column('currency_id',Integer,ForeignKey('currency.id'),nullable=False)
+    exchange = relationship(Exchange,backref=backref('stocks'))
+    
 
 class Period(Base):
     __tablename__ = 'period'

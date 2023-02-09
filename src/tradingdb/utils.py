@@ -125,8 +125,10 @@ def download_data_from_yfsymbols(
                         filename = f"{symbol}.csv"
                         filename = os.path.join(mypath, filename)
                         ddf.to_csv(filename, index=True)
+                    ddf=ddf.dropna()
                     results_df[symbol] = copy.deepcopy(ddf)
         else:
+            df=df.dropna()
             results_df[symbols] = copy.deepcopy(df)
 
     return results_df

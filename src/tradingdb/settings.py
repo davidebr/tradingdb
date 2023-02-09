@@ -4,15 +4,16 @@ EXCHANGES={
     'NASDAQ':{'cur':'USD'},
     'NYSE':{'cur':'USD'},
     'FTSE':{'cur':'GBP'},
-    'FTSE-AIM':{'cur':'GBP'}
+    'FTSE-AIM':{'cur':'GBP'},
+    'INDEXES':{},
 }
 
 INDEXES={
-    'FTSE100':              { 'yf':'^FTSE','url':'%5EFTSE'},
-    'FTSEAIM_all_share':    {'yf': '^FTAI', 'url':'%5EFTAI'},
-    'NASDAQ':               {'yf':'^IXIC','url':'%5EIXIC'},
-    'DowJones':             {'yf':'^GSPC','url':'%5EGSPC'},
-    'S&P500':               {'yf':'^DJI','url':'%5EDJI'},
+    'FTSE100':              { 'yf':'^FTSE','url':'%5EFTSE','cur':'GBP','wiki':'https://en.wikipedia.org/wiki/FTSE_100_Index'},
+    'FTSEAIM_all_share':    {'yf': '^FTAI', 'url':'%5EFTAI','cur':'GBP'},
+    'NASDAQ':               {'yf':'^IXIC','url':'%5EIXIC','cur':'USD'},
+    'DowJones':             {'yf':'^GSPC','url':'%5EGSPC','cur':'USD'},
+    'S&P500':               {'yf':'^DJI','url':'%5EDJI','cur':'USD','wiki':'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'},
 }
 
 
