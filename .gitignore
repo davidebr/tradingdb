@@ -111,3 +111,8 @@ venv.bak/
 .vscode/
 
 tradingdb.code-workspace
+
+/notebooks/*.json
+/data/master.db
+
+ig_config.py
