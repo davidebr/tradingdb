@@ -115,4 +115,5 @@ tradingdb.code-workspace
 /notebooks/*.json
 /data/master.db
 
-ig_config.py
+ig_config.json
+alphavantage.json

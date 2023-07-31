@@ -97,6 +97,16 @@ def download_ftse_symbols(index_symbol):
     return df
 
 
+def download_nasdaq_symbols():
+    # download csv from https://www.nasdaq.com/market-activity/stocks/screener
+    fname="/Users/davidebranduardi/Projects/Finance/trading-toolbox/tradingdb/tradingdb/data"
+    dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "../data"))
+    fname= os.path.join(dir,'nasdaq_screener.csv')
+    df = pd.read_csv(fname)
+
+    return df
+
+
 def download_data_from_yfsymbols(
     symbols, timestart, timeend, interval="1d", mypath=None
 ):

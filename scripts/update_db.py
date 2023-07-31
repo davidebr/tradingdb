@@ -30,22 +30,30 @@ def main():
     parser.add_argument('--db', type=str, help='Path to the database file.')
     parser.add_argument('--interval', type=str, help='Interval value. e.g. 1h  ')
     parser.add_argument('--time_str', type=str, help='Time in the format "YYYY-MM-DD HH:mm:ss".')
+    parser.add_argument('--exchange', type=str, help='FTSE/NASDAQ')
 
     args = parser.parse_args()
 
     db_path = args.db
     interval = args.interval
     time_str = args.time_str
+    exchange = args.exchange
 
     # Print the parsed values
     print("db:", db_path)
     print("interval:", interval)
     print("time_str:", time_str)
+    print("exchange:", exchange)
 
     # If time_str is not provided, use the current time
     if not time_str:
         time_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+     #1=FTSE/3=NASDQQ
+    if not exchange:
+       exchange="FTSE"
+
+    print("Exchange ID ",exchange)
     # Convert the time string to a datetime object
     try:
         datetime_obj = datetime.strptime(time_str, "%Y-%m-%d %H:%M:%S")
@@ -72,14 +80,16 @@ def main():
     stock_last_date={}
     with session.begin() as mysession:
         q=mysession.query(stock.Stock)
-        #q=q.join(stock.Exchange)
+        q=q.join(stock.Exchange)
         q=q.join(stock.Price)
         q=q.join(stock.Period)
         q=q.filter(stock.Period.name==interval)
+        q=q.filter(stock.Exchange.name==exchange)
         q=q.all()
         for r in q:
             stock_last_date[r.yf_symbol]=get_last_price_for_period(r)
 
+    print(stock_last_date.items())
     def add_dfd_to_yfsymbol(session,interval,dfd):
         with session.begin() as mysession:
             for k,df in dfd.items():
